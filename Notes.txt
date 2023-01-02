@@ -1,0 +1,114 @@
+Comandos de consola
+    dotnet -> Accede a la .NET Core command-line interface o CLI
+    dotnet --version -> Version instalada de .NET Core
+    dotnet --help -> Lista de comandos disponibles
+    dotnet new -> Muestra una lista de los diferentes tipos de proyectos que se pueden crear
+    dotnet new web -> Crea un nuevo proyecto vacio de .NET Core
+    dotnet run -> Ejecuta la aplicacion
+    dotnet run Greeting="Hello World!" -> Ejecuta la aplicacion pasandole como argumento la configuracion para Greeting
+
+    dotnet add package NOMBRE -> Instala un nuget package en el proyecto
+
+    dotnet ef -> Comandos de Entity Framework Core CLI
+
+    dotnet ef dbcontext list -> Lista todos los DbContext que se encuentren en el proyecto
+    dotnet ef dbcontext info -> Muestra la informacion configurada para el DbContext
+
+    dotnet ef migrations add --help -> Muestra una guia de como utilizar el comando "dotnet ef migrations add"
+    dotnet ef migrations add Nombre -> Agrega una migracion nueva
+    dotnet ef migrations remove -> Elimina todas las migraciones pendientes
+    
+    dotnet ef database --help -> Muestra una guia de como utilizar el comando "dotnet ef database"
+    dotnet ef database update -> Ejecuta las migraciones pendientes en la base de datos
+    
+    notepad fileName -> Abre el archivo con notepad
+    code . -> Abre el directorio actual con Visual Studio Code
+
+Estructura del proyecto
+    - Se incluyen todos los archivos C# que se encuentren dentro de la carpeta donde esta el proyecto.
+
+Configuraciones
+    - Inyectamos al metodo Configure de la clase Startup, un objeto que implemente IConfiguration. Esta interface permite leer configuraciones desde las siguientes fuentes:
+        1. Argumentos de la linea de comandos 
+        2. Variables de entorno
+        3. Archivo User Secrets
+        4. Archivo JSON (appsettings.json)
+    Las configuraciones tienen prioridad respetando ese orden.
+
+    - Tambien podemos crear un servicio que trabaje con la configuracion y luego lo registramos para poder ser inyectado.
+
+Middleware
+    El middleware nos permite controlar como nuestra aplicacion responde a los HTTP request. Tambien nos permite mostrar informacion de error y es una parte vital en la autenticacion y autorizacion de un usuario para realizar diferentes acciones.
+
+    Ejemplo de pipeline:
+        Request --> Logger --> Authorizer --> 
+                                               Router  
+        Response <-- Logger <-- Authorizer <--
+
+    Los diferentes modulos del middleware se configuran en el metodo Configure de la clase Startup. Por ejemplo:
+        app.UseWelcomePage();
+    Los modulos se ejecutaran en el orden en que esten declarados.
+
+Enviroment
+    La interface IHostingEnviroment nos permite ver el ambiente de ejecucion de la aplicacion.
+
+Routing
+    .NET Core le da prioridad a un parametro enviado por URL que a un QueryString
+
+Formularios
+    El input con el nombre __RequestVerificationToken le permite al framework validar que el formulario enviado por el usuario sea uno creado por nuestra aplicacion.
+    Es recomendable incluir la meta-etiqueta ValidateAntiForgeryToken en cada metodo POST que reciba un formulario
+
+POST - Redirect - GET Pattern
+    Cuando se postea un formulario a un controller, se debe responder con una URL que llame a un metodo GET. No se debe devolver una vista directamente desde el metodo POST
+
+Entity Framework Core
+    Habilitar comandos de consola 
+        - Editar el .csproj y agregar la siguiente linea (la version debe ser la misma que el proyecto):    
+            <ItemGroup>
+                <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="x"></DotNetCliToolReference>
+            </ItemGroup>  
+
+MVC vs Razor Pages
+    MVC -> Es preferible para crear servicios web y api's. Pero tambien se pueden utilizar para generar paginas a traves de controllers y views.
+    Razor Pages -> Es preferible para crear paginas
+
+Habilitar SSL
+    !Se recomienda utilizar SSL en todas las aplicaciones donde el usuario deba autenticarse.
+        1. Ir a las 'Properties' del proyecto y a la pestaña 'Debug'
+        2. Seleccionar la opcion 'Enable SSL' y pegar la url nueva en la App URL.
+
+    Es posible configurar un middleware que redireccione todos request que vengan por HTTP para que utilicen HTTPS.
+
+Utilizar OpenID con Azure
+    1. Registrar nuestra aplicacion en Azure Active Directory
+        a. Ir al sitio web 'https://portal.azure.com/', es necesario poseer una cuenta de azure.
+        b. Ir a la pestaña de 'Azure Active Directory' y luego a 'App registrations'
+        c. Seleccionar 'New application registration' y completar los siguientes campos
+            - Name: nombre de la aplicacion.
+            - Application Type: tipo de aplicacion.
+            - Sign-on URL: url de la aplicacion.
+        d. Entrar en la aplicacion recien registrar e ir a 'Settings' y 'Reply URLs' para configurar la direccion a la cual Azure debe enviar el token de autenticacion.
+            - En .NET Core es la siguiente: 'https://localhost:44356/signin-oidc'
+
+    2. Configurar el ClientId y el Authority en nuestra aplicacion 
+        - En el appsettings.json agregar los siguientes valores:
+            "AzureAd": {
+                "ClientId": "{ClientID}",
+                "Authority": "https://login.microsoftonline.com/{DirectoryID}"
+            },
+    
+NPM
+    1. Agregar a la solucion el archivo "package.json"
+    2. Agregar la seccion "dependencies"
+    3. Agregar las diferentes librerias de la siguiente forma
+        nombre: version
+    4. Los archivos seran instalados dentro de la carpeta node_modules
+
+Validacion en el cliente
+    Se deben instalar los siguientes paquetes:
+        1. JQuery
+        2. JQuery Validation
+        3. JQuery Validation Unobtrusive
+
+

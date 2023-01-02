@@ -1,0 +1,17 @@
+﻿<!-- Indica la clase que recibio del controller -->
+@model HomeIndexViewModel
+@{
+    // Establece el titulo de la pagina
+    ViewBag.Title = "Home page";
+}
+
+<h1>All Restaurants</h1>
+@foreach (var restaurant in Model.Restaurants)
+{
+    // Renderiza un partial view pasandole como modelo un restaurant
+    @Html.Partial("_Summary", restaurant)
+}
+
+<div>
+    <a class="btn btn-primary" asp-action="Create">Add Restaurant</a>
+</div>

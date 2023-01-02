@@ -1,0 +1,27 @@
+﻿<!-- Indica la clase que recibio del controller -->
+@model Restaurant
+@{
+    // Establece el titulo de la pagina
+    ViewBag.Title = "Create";
+}
+
+<h1>Create</h1>
+<form method="post">
+    <div>
+        <!-- Muestra la etiqueta especificada en el modelo para la propiedad Name -->
+        <label asp-for="Name"></label>
+        <!-- Crea un input para la propiedad Name -->
+        <input asp-for="Name" />
+        <!-- Muestra los mensajes de validacion para la propiedad Name -->
+        <span asp-validation-for="Name"></span>
+    </div>    
+    <div>
+        <!-- Muestra la etiqueta especificada en el modelo para la propiedad Cuisine -->
+        <label asp-for="Cuisine"></label>
+        <!-- Crea un combo para la propiedad Cuisine a partir de una enumeracion -->
+        <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+        <!-- Muestra los mensajes de validacion para la propiedad Cuisine -->
+        <span asp-validation-for="Cuisine"></span>
+    </div>
+    <input type="submit" name="save" value="Save" />
+</form>

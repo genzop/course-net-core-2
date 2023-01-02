@@ -1,0 +1,13 @@
+﻿@model Restaurant
+<section class="panel panel-default">
+    <h3 class="panel-heading">@Model.Name</h3>
+    <div class="panel-body">
+        Cuisine: @Model.Cuisine
+    </div>
+    <div class="panel-footer">
+        <!-- Crea un hipervinculo utilizando un tag helper (asp-action: actionDestino, asp-route-nombreParametro: valorParametro) -->
+        <a class="btn btn-default"  asp-action="Details" asp-route-id="@Model.Id">More</a>
+        <!-- Crea un hipervinculo utilizando un tag helper (asp-page: pageDestino, asp-route-nombreParametro: valorParametro) -->
+        <a class="btn btn-default" asp-page="/Restaurants/Edit" asp-route-id="@Model.Id">Edit</a>
+    </div>
+</section>

@@ -1,0 +1,68 @@
+﻿<!--
+    Un layout view permite reutilizar codigo en multiples views. 
+    Este puede especificarse en cada view o en general para toda la aplicacion. 
+    Tambien puede ser null para ignorar el layout en una view en particular.
+-->
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+              asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"/>
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">OdeToFood</a>
+            </div>
+            <div class="navbar-right">
+                <a class="btn btn-default">Login</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Renderiza la view correspondiente -->
+        @RenderBody()
+        <footer>
+            <!-- Renderiza una seccion llamada "footer" que no es obligatoria-->
+            @RenderSection("footer", false)
+            <br/><br/>
+            <!-- Renderiza el ViewComponent Greeter -->
+            <!-- Se debe respetar la siguiente regla: vc-nombre (minuscula) -->
+            <vc:greeter></vc:greeter>
+        </footer>
+    </div>
+    <environment include="Development">
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+        <script src="~/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+    </environment>      
+
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity=""></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"
+                asp-fallback-src="~/node_modules/jquery-validation/dist/jquery.validate.js"
+                asp-fallback-test="window.jQuery & window.jQuery.validator"
+                crossorigin="anonymous"
+                integrity=""></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+                asp-fallback-src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"
+                asp-fallback-test="window.jQuery & window.jQuery.validator & window.jQuery.validator.unobtrusive"
+                crossorigin="anonymous"
+                integrity=""></script>
+    </environment>
+</body>
+</html>

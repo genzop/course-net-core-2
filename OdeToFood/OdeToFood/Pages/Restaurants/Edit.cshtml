@@ -1,0 +1,29 @@
+﻿@page "{id}"
+<!-- Espera un parametro obligatorio llamado id -->
+
+<!-- Importa el namespace -->
+@using OdeToFood.Pages.Restaurants
+@model EditModel
+
+<h1>Editing @Model.Restaurant.Name</h1>
+<form method="post">
+    <!-- Crea un input oculto para guardar el Id -->
+    <input type="hidden" asp-for="Restaurant.Id" />
+    <div>
+        <!-- Muestra la etiqueta especificada en el modelo para la propiedad Name -->
+        <label asp-for="Restaurant.Name"></label>
+        <!-- Crea un input para la propiedad Name -->
+        <input asp-for="Restaurant.Name" />
+        <!-- Muestra los mensajes de validacion para la propiedad Name -->
+        <span asp-validation-for="Restaurant.Name"></span>
+    </div>
+    <div>
+        <!-- Muestra la etiqueta especificada en el modelo para la propiedad Cuisine -->
+        <label asp-for="Restaurant.Cuisine"></label>
+        <!-- Crea un combo para la propiedad Cuisine a partir de una enumeracion -->
+        <select asp-for="Restaurant.Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+        <!-- Muestra los mensajes de validacion para la propiedad Cuisine -->
+        <span asp-validation-for="Restaurant.Cuisine"></span>
+    </div>
+    <input type="submit" name="save" value="Save" />
+</form>

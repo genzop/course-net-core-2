@@ -1,0 +1,16 @@
+﻿<!-- Indica la clase que recibio del controller -->
+@model Restaurant
+@{
+    // Establece el titulo de la pagina
+    ViewBag.Title = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<div>
+    Id: @Model.Id
+</div>
+<div>
+    Cuisine: @Model.Cuisine
+</div>
+<!-- Renderiza un link al action Index del controller Home -->
+<a asp-action="Index" asp-controller="Home">Home</a>
